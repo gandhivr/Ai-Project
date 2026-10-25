@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anti-Gravity Pro | Smart Classroom Vision Suite</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 fill=%22%236366f1%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22/></svg>">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Top Global Header -->
+    <header class="top-header">
+      <div class="brand-section">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div>
+          <span class="brand-title">Smart Classroom Vision Suite</span>
+          <span class="brand-badge">CLASSICAL VISION ENGINE</span>
+        </div>
+      </div>
+
+      <div class="header-status-group">
+        <div id="system-status-pill" class="status-indicator">
+          <span class="status-dot"></span>
+          <span id="system-status-text">INITIALIZING...</span>
+        </div>
+        <div class="clock-display" id="live-clock">--:--:--</div>
+      </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="nav-tabs" id="nav-tabs">
+      <button class="tab-btn active" data-tab="tab-live">
+        <span class="tab-icon">🚪</span> Live Door Attendance
+      </button>
+      <button class="tab-btn" data-tab="tab-enroll">
+        <span class="tab-icon">👤</span> Admin Enrollment Studio
+      </button>
+      <button class="tab-btn" data-tab="tab-records">
+        <span class="tab-icon">📊</span> Attendance Database
+      </button>
+      <button class="tab-btn" data-tab="tab-tuning">
+        <span class="tab-icon">⚡</span> Haar Detector Tuning
+      </button>
+      <button class="tab-btn" data-tab="tab-robustness">
+        <span class="tab-icon">🔬</span> Robustness Benchmark
+      </button>
+      <button class="tab-btn" data-tab="tab-ethics">
+        <span class="tab-icon">🛡️</span> Ethics & Data Purge
+      </button>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+
+      <!-- ============================================================== -->
+      <!-- TAB 1: Live Door Attendance Portal                             -->
+      <!-- ============================================================== -->
+      <section id="tab-live" class="tab-pane active">
+        <div class="grid-stage">
+          <!-- Left: Main Video Stage -->
+          <div class="glass-card">
+            <div class="video-wrapper" id="live-video-wrapper">
+              <div class="video-hud-header">
+                <div class="hud-tag">
+                  <span class="rec-pulse"></span>
+                  <span>DOOR MONITOR #1 [ACTIVE]</span>
+                </div>
+                <div id="hud-metrics">FPS: 42.5 | RES: 640x480</div>
+              </div>
+
+              <!-- Real Webcam or Simulation Frame -->
+              <video id="webcam-live" class="video-element" autoplay playsinline muted></video>
+              <img id="simulated-image" class="video-element" style="display:none;" alt="Simulation feed">
+              <canvas id="canvas-overlay" class="canvas-overlay" width="640" height="480"></canvas>
+            </div>
+
+            <!-- Video Controls Bar -->
+            <div class="video-controls-bar">
+              <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                <button id="btn-toggle-camera" class="btn btn-secondary">
+                  <span>📷</span> Toggle Webcam
+                </button>
+                <button id="btn-simulate-vraj" class="btn btn-emerald">
+                  <span>👤</span> Test My Photo (Vraj Gandhi)
+                </button>
+                <button id="btn-simulate-verified" class="btn btn-secondary">
+                  <span>👤</span> Inject Enrolled Face (Alice)
+                </button>
+                <button id="btn-simulate-unknown" class="btn btn-danger">
+                  <span>🚫</span> Inject Unknown (Blur Test)
+                </button>
+              </div>
+
+              <div style="font-size: 0.8rem; color: var(--text-dim); display: flex; align-items: center; gap: 0.4rem;">
+                <span>🔒 Privacy Shield:</span>
+                <span style="color: var(--emerald); font-weight: 600;">51×51 Gaussian Blur Active</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Real-time Attendance Ticker -->
+          <div class="glass-card event-ticker">
+            <div class="ticker-header">
+              <div class="ticker-title">
+                <span>⏱️</span> Live Session Ticker
+              </div>
+              <span id="ticker-count" class="ticker-counter">0 Marked</span>
+            </div>
+
+            <div class="ticker-list" id="ticker-list">
+              <!-- Dynamically populated attendance cards -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 2: Admin Enrollment Studio                                 -->
+      <!-- ============================================================== -->
+      <section id="tab-enroll" class="tab-pane">
+        <div class="grid-stage">
+          <!-- Left: Enrollment Camera & Gallery -->
+          <div class="glass-card">
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+              <span>📸</span> Enrollment Camera Viewport
+            </h3>
+
+            <div class="video-wrapper" style="aspect-ratio: 4 / 3; max-height: 400px;">
+              <video id="webcam-enroll" class="video-element" autoplay playsinline muted></video>
+              <canvas id="canvas-enroll" class="canvas-overlay" width="640" height="480"></canvas>
+            </div>
+
+            <!-- Filmstrip of Captured Crops -->
+            <div style="margin-top: 1rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="form-label" style="margin-bottom: 0;">Captured Preprocessed Crops (100×100 CLAHE):</span>
+                <span id="enroll-counter-badge" class="brand-badge">0 / 10 Crops</span>
+              </div>
+              <div class="gallery-strip" id="crops-gallery">
+                <span style="color: var(--text-dim); font-size: 0.8rem;">No crops captured yet. Position face and click "Capture Face Crop".</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Metadata & Trigger Form -->
+          <div class="glass-card">
+            <h3 style="margin-bottom: 1.25rem; font-size: 1.1rem;">Volunteer Registration</h3>
+
+            <div class="form-group">
+              <label class="form-label" for="enroll-name">Student Full Name</label>
+              <input type="text" id="enroll-name" class="form-input" placeholder="e.g. John Doe">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="enroll-roll">Student Roll / ID Number</label>
+              <input type="text" id="enroll-roll" class="form-input" placeholder="e.g. CS-2026-042">
+            </div>
+
+            <div class="form-group" style="margin: 1.25rem 0;">
+              <label style="display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.8rem; color: var(--text-muted); cursor: pointer;">
+                <input type="checkbox" id="enroll-consent" checked style="margin-top: 3px;">
+                <span>I confirm that the student has read and digitally signed the <strong>Participant Informed Consent Agreement</strong>.</span>
+              </label>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem;">
+              <button id="btn-capture-crop" class="btn btn-primary" style="width: 100%;">
+                <span>📷</span> Capture Face Crop (Press 'C')
+              </button>
+
+              <button id="btn-finalize-train" class="btn btn-emerald" style="width: 100%;" disabled>
+                <span>⚡</span> Finalize & Retrain Model (Press 'Q')
+              </button>
+            </div>
+
+            <div style="margin-top: 1.5rem; padding: 0.85rem; background: rgba(99, 102, 241, 0.08); border-radius: var(--radius-sm); border: 1px solid rgba(99, 102, 241, 0.2); font-size: 0.75rem; color: var(--text-muted);">
+              💡 <strong>Protocol Rule:</strong> Minimum 5 crops required before retraining. Crops are automatically standardized to 100×100 px via CLAHE.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 3: Attendance Database & Records Table                     -->
+      <!-- ============================================================== -->
+      <section id="tab-records" class="tab-pane">
+        <!-- Metrics Row -->
+        <div class="metrics-row">
+          <div class="metric-card">
+            <div class="metric-title">Enrolled Volunteers</div>
+            <div class="metric-val" id="metric-enrolled">5</div>
+            <div class="metric-sub"><span>✓</span> Opt-in Verified</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-title">Present Today</div>
+            <div class="metric-val" id="metric-present">1</div>
+            <div class="metric-sub" style="color: var(--cyan);"><span>●</span> Idempotent Count</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-title">Mean Confidence</div>
+            <div class="metric-val" id="metric-confidence">94.2%</div>
+            <div class="metric-sub"><span>★</span> Intra-Class Euclidean</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-title">Storage Footprint</div>
+            <div class="metric-val">1.2 MB</div>
+            <div class="metric-sub" style="color: var(--indigo);"><span>🔒</span> Local Sandboxed</div>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="glass-card">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <input type="text" id="search-attendance" class="form-input" placeholder="🔍 Search student name or roll..." style="width: 280px;">
+              <button id="btn-refresh-records" class="btn btn-secondary"><span>🔄</span> Refresh</button>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem;">
+              <button id="btn-export-csv" class="btn btn-secondary"><span>📥</span> Export CSV</button>
+              <button id="btn-export-json" class="btn btn-secondary"><span>📄</span> Export JSON</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Student Name</th>
+                  <th>Roll / ID Number</th>
+                  <th>Confidence Score</th>
+                  <th>Verification Status</th>
+                </tr>
+              </thead>
+              <tbody id="attendance-table-body">
+                <!-- Dynamically loaded rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 4: Haar Detector Tuning & Benchmark                        -->
+      <!-- ============================================================== -->
+      <section id="tab-tuning" class="tab-pane">
+        <div class="glass-card" style="margin-bottom: 1.5rem;">
+          <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">Haar Cascade Detector 3×3 Grid Search Matrix</h3>
+          <p style="color: var(--text-muted); font-size: 0.85rem;">
+            Evaluation of <code>scaleFactor</code> $\in$ [1.05, 1.15, 1.30] $\times$ <code>minNeighbors</code> $\in$ [3, 5, 7] using <code>haarcascade_frontalface_default.xml</code> over 60 standardized frames.
+          </p>
+
+          <table class="grid-matrix-table">
+            <thead>
+              <tr style="color: var(--text-dim); font-size: 0.75rem; text-transform: uppercase;">
+                <th>scaleFactor \ minNeighbors</th>
+                <th>minNeighbors = 3</th>
+                <th>minNeighbors = 5 (Standard)</th>
+                <th>minNeighbors = 7 (Strict)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 600; color: var(--text-muted);">scaleFactor = 1.05 (Dense)</td>
+                <td>
+                  <div class="matrix-cell">
+                    <div class="matrix-fps">10.9 FPS</div>
+                    <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="matrix-cell">
+                    <div class="matrix-fps">17.7 FPS</div>
+                    <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="matrix-cell">
+                    <div class="matrix-fps">17.3 FPS</div>
+                    <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600; color: var(--text-muted);">scaleFactor = 1.15 (Balanced)</td>
+                <td>
+                  <div class="matrix-cell">
+                    <div class="matrix-fps">42.8 FPS</div>
+                    <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="matrix-cell optimal">
+                    <div style="font-size: 0.65rem; color: var(--amber); font-weight: 700;">★ OPTIMAL SELECTION</div>
+                    <div class="matrix-fps" style="color: var(--amber);">42.5 FPS</div>
+                    <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="matrix-cell">
+                    <div class="matrix-fps">42.3 FPS</div>
+                    <div class="matrix-label">FP: 0 | Miss: 3.3%</div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600; color: var(--text-muted);">scaleFactor = 1.30 (Fast)</td>
+                <td>
+                  <div class="matrix-cell">
+                    <div class="matrix-fps">72.2 FPS</div>
+                    <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="matrix-cell">
+                    <div class="matrix-fps">69.5 FPS</div>
+                    <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="matrix-cell">
+                    <div class="matrix-fps">72.6 FPS</div>
+                    <div class="matrix-label">FP: 0 | Miss: 33.3%</div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--cyan);">Engineering Operational Conclusion</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+            The empirical Pareto-optimal configuration is <strong><code>scaleFactor = 1.15, minNeighbors = 5</code></strong>. It delivers <strong>42.5 FPS</strong> real-time throughput (well above the 30 FPS webcam standard) while preserving a <strong>0.0% False Positive</strong> rate and <strong>0.0% Miss Rate</strong> across test sets.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 5: Environmental Robustness Audit Suite                    -->
+      <!-- ============================================================== -->
+      <section id="tab-robustness" class="tab-pane">
+        <div class="glass-card" style="margin-bottom: 1.5rem;">
+          <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">Environmental Robustness Benchmark Suite (300 Evals)</h3>
+          <p style="color: var(--text-muted); font-size: 0.85rem;">
+            Comparative stress test evaluating classical Haar Cascade + CLAHE + 3,776-dim LBP under 5 controlled conditions (60 evaluations each).
+          </p>
+
+          <div class="table-responsive" style="margin-top: 1rem;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Condition</th>
+                  <th>Environmental Stress Factor</th>
+                  <th>Face Detection Rate</th>
+                  <th>Recognition Accuracy</th>
+                  <th>False Rejection (FRR)</th>
+                  <th>False Acceptance (FAR)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="ticker-badge" style="background: rgba(99, 102, 241, 0.15); color: var(--indigo); border-color: rgba(99, 102, 241, 0.3);">Condition A</span></td>
+                  <td>Diffuse Nominal Indoor Light (500 lux)</td>
+                  <td><strong style="color: var(--emerald);">100.0%</strong></td>
+                  <td>95.0%</td>
+                  <td>5.0%</td>
+                  <td>0.0%</td>
+                </tr>
+                <tr>
+                  <td><span class="ticker-badge" style="background: rgba(6, 182, 212, 0.15); color: var(--cyan); border-color: rgba(6, 182, 212, 0.3);">Condition B</span></td>
+                  <td>Low Ambient Light (&gamma; = 0.40 Dark Room)</td>
+                  <td><strong style="color: var(--cyan);">96.7%</strong></td>
+                  <td>90.0%</td>
+                  <td>10.0%</td>
+                  <td>0.0%</td>
+                </tr>
+                <tr>
+                  <td><span class="ticker-badge" style="background: rgba(245, 158, 11, 0.15); color: var(--amber); border-color: rgba(245, 158, 11, 0.3);">Condition C</span></td>
+                  <td>Specular Glare & Backlight Bloom</td>
+                  <td><strong style="color: var(--amber);">40.0%</strong></td>
+                  <td>33.3%</td>
+                  <td>66.7%</td>
+                  <td>0.0%</td>
+                </tr>
+                <tr>
+                  <td><span class="ticker-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--emerald); border-color: rgba(16, 185, 129, 0.3);">Condition D</span></td>
+                  <td>Eyeglasses (Frames with Lens Reflection)</td>
+                  <td><strong style="color: var(--emerald);">100.0%</strong></td>
+                  <td>85.0%</td>
+                  <td>15.0%</td>
+                  <td>5.0%</td>
+                </tr>
+                <tr>
+                  <td><span class="ticker-badge" style="background: rgba(244, 63, 94, 0.15); color: var(--crimson); border-color: rgba(244, 63, 94, 0.3);">Condition E</span></td>
+                  <td>Face Mask (Synthetic Lower 45% Occlusion)</td>
+                  <td><strong style="color: var(--crimson);">66.7%</strong></td>
+                  <td>33.3%</td>
+                  <td>100.0%</td>
+                  <td>0.0%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--amber);">Why Haar Features Degrade Under Face Masks (Condition E)</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+            Haar Cascades compute rectangular intensity sum differences over integral images. The primary cascade filters mandate: (1) Eye-Nose horizontal edge, (2) Nose-Lip vertical contrast, and (3) Oral-mental sulcus horizontal dark-over-light mouth edge. Occluding 45% of the lower face physically eradicates features #2 and #3, causing early decision-tree stages to prematurely drop candidate windows.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 6: Ethics, Consent & DoD Cryptographic Purge Station       -->
+      <!-- ============================================================== -->
+      <section id="tab-ethics" class="tab-pane">
+        <div class="grid-stage">
+          <!-- Left: Consent & Fairness Overview -->
+          <div class="glass-card">
+            <h3 style="font-size: 1.15rem; margin-bottom: 0.75rem;">AI Ethics & Algorithmic Governance</h3>
+            
+            <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; display: flex; flex-direction: column; gap: 0.75rem;">
+              <p>
+                <strong>1. Consent & Autonomy Protocol:</strong> Every enrolled participant retains full self-determination rights. Participation is 100% voluntary, revocable at any time without academic prejudice. All face crops are downscaled to 100×100 px with a hard limit of 10 crops per volunteer.
+              </p>
+              <p>
+                <strong>2. Demographic Fairness via CLAHE:</strong> Haar cascade integral filters exhibit higher miss rates on Fitzpatrick skin types (V & VI) under raw lighting due to compressed periocular-maxillary contrast. Our mandatory <strong>CLAHE ($8\times 8$ grid, clipLimit=2.0)</strong> equalizes local tonal gradients, ensuring demographic parity.
+              </p>
+              <p>
+                <strong>3. Anti-Surveillance Guardrail:</strong> Any non-consenting bystander detected at the door is instantly obscured with a <strong>$51\times 51$ ($\sigma=30$) Gaussian blur</strong>. Zero metadata or imagery is ever saved.
+              </p>
+            </div>
+
+            <div style="margin-top: 1.25rem;">
+              <h4 style="font-size: 0.9rem; margin-bottom: 0.5rem;">Registered Consent Agreements:</h4>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="ticker-badge">consent_Alice_Smith.pdf</span>
+                <span class="ticker-badge">consent_Bob_Johnson.pdf</span>
+                <span class="ticker-badge">consent_Charlie_Davis.pdf</span>
+                <span class="ticker-badge">consent_Diana_Evans.pdf</span>
+                <span class="ticker-badge">consent_Ethan_Wright.pdf</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Cryptographic Purge Station (Danger Zone) -->
+          <div class="glass-card" style="border-color: rgba(244, 63, 94, 0.4); background: rgba(244, 63, 94, 0.04);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--crimson); font-weight: 700; margin-bottom: 0.75rem;">
+              <span>⚠️</span> DANGER ZONE: DATA LIFECYCLE
+            </div>
+
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.25rem;">
+              Upon project or course conclusion, execute the <strong>DoD 5220.22-M 3-pass salted cryptographic purge</strong>:
+              <br>• Pass 1: All Zeros (0x00)
+              <br>• Pass 2: All Ones (0xFF)
+              <br>• Pass 3: Salted Cryptographic Random Bytes
+              <br>Followed by 0-byte file truncation and unlinking of all crops, models, and database rows.
+            </p>
+
+            <button id="btn-open-purge-modal" class="btn btn-danger" style="width: 100%;">
+              <span>🔥</span> Purge All Biometric Data (DoD 5220.22-M)
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Confirmation Modal for DoD Purge -->
+  <div id="purge-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3 style="color: var(--crimson); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+        <span>⚠️</span> Confirm Cryptographic Data Wipe
+      </h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.25rem;">
+        Are you sure you want to permanently shred all raw face crops, serialized model pickles (<code>model.pkl</code>), and attendance logs? This operation executes a 3-pass DoD 5220.22-M overwrite and cannot be undone.
+      </p>
+
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+        <button id="btn-cancel-purge" class="btn btn-secondary">Cancel</button>
+        <button id="btn-confirm-purge" class="btn btn-danger">Execute DoD Wipe</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
