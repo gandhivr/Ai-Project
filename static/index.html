@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anti-Gravity Pro | Smart Classroom Vision Suite</title>
+  <title>Veritas University | Academic Biometric Intelligence Suite</title>
   <link rel="stylesheet" href="/static/css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 fill=%22%236366f1%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 fill=%22%234f46e5%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22/></svg>">
 </head>
 <body>
 
@@ -19,12 +19,31 @@
           </svg>
         </div>
         <div>
-          <span class="brand-title">Smart Classroom Vision Suite</span>
-          <span class="brand-badge">CLASSICAL VISION ENGINE</span>
+          <span class="brand-title">VERITAS UNIVERSITY</span>
+          <span class="brand-badge">ACADEMIC BIOMETRIC SUITE</span>
         </div>
       </div>
 
+      <!-- Center: Course & Active Lecture Session Switcher -->
+      <div class="course-selector-bar">
+        <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">Curriculum:</span>
+        <select id="header-course-select" class="course-select-input">
+          <option value="CS-401">CS-401: Advanced Computer Vision & Biometrics</option>
+          <option value="CS-302">CS-302: Distributed Cloud Systems & Microservices</option>
+          <option value="CS-205">CS-205: Data Structures & Complexity</option>
+          <option value="AI-503">AI-503: Deep Neural Representations & Ethics</option>
+        </select>
+        <div class="session-hud-pill">
+          <span>📍</span>
+          <span id="active-session-label">Lecture #14 (10:00 - 11:30 AM) • Turing-402</span>
+        </div>
+      </div>
+
+      <!-- Right Header Actions -->
       <div class="header-status-group">
+        <button id="btn-toggle-sound" class="audio-toggle-btn active" title="Toggle audio chime on verification">
+          <span>🔔</span> Chime ON
+        </button>
         <div id="system-status-pill" class="status-indicator">
           <span class="status-dot"></span>
           <span id="system-status-text">INITIALIZING...</span>
@@ -36,22 +55,28 @@
     <!-- Navigation Bar -->
     <nav class="nav-tabs" id="nav-tabs">
       <button class="tab-btn active" data-tab="tab-live">
-        <span class="tab-icon">🚪</span> Live Door Attendance
+        <span class="tab-icon">🚪</span> Gate Attendance
+      </button>
+      <button class="tab-btn" data-tab="tab-sweep">
+        <span class="tab-icon">📸</span> Panoramic Sweep
+      </button>
+      <button class="tab-btn" data-tab="tab-roster">
+        <span class="tab-icon">📋</span> Faculty Roster
+      </button>
+      <button class="tab-btn" data-tab="tab-defaulters">
+        <span class="tab-icon">📈</span> Defaulters Radar (<75%)
+      </button>
+      <button class="tab-btn" data-tab="tab-dossiers">
+        <span class="tab-icon">🎓</span> Student Dossiers
       </button>
       <button class="tab-btn" data-tab="tab-enroll">
-        <span class="tab-icon">👤</span> Admin Enrollment Studio
-      </button>
-      <button class="tab-btn" data-tab="tab-records">
-        <span class="tab-icon">📊</span> Attendance Database
+        <span class="tab-icon">👤</span> Enrollment Studio
       </button>
       <button class="tab-btn" data-tab="tab-tuning">
-        <span class="tab-icon">⚡</span> Haar Detector Tuning
-      </button>
-      <button class="tab-btn" data-tab="tab-robustness">
-        <span class="tab-icon">🔬</span> Robustness Benchmark
+        <span class="tab-icon">⚡</span> Benchmark & Tuning
       </button>
       <button class="tab-btn" data-tab="tab-ethics">
-        <span class="tab-icon">🛡️</span> Ethics & Data Purge
+        <span class="tab-icon">🛡️</span> Security & DoD Purge
       </button>
     </nav>
 
@@ -59,7 +84,7 @@
     <main class="main-content">
 
       <!-- ============================================================== -->
-      <!-- TAB 1: Live Door Attendance Portal                             -->
+      <!-- TAB 1: Live Gate Attendance Portal                             -->
       <!-- ============================================================== -->
       <section id="tab-live" class="tab-pane active">
         <div class="grid-stage">
@@ -69,9 +94,9 @@
               <div class="video-hud-header">
                 <div class="hud-tag">
                   <span class="rec-pulse"></span>
-                  <span>DOOR MONITOR #1 [ACTIVE]</span>
+                  <span id="gate-active-badge">GATE MONITOR #1 [HALL TURING-402]</span>
                 </div>
-                <div id="hud-metrics">FPS: 42.5 | RES: 640x480</div>
+                <div id="hud-metrics">FPS: 42.5 | RES: 640x480 | ANTI-PROXY ON</div>
               </div>
 
               <!-- Real Webcam or Simulation Frame -->
@@ -93,7 +118,10 @@
                   <span>👤</span> Inject Enrolled Face (Alice)
                 </button>
                 <button id="btn-simulate-unknown" class="btn btn-danger">
-                  <span>🚫</span> Inject Unknown (Blur Test)
+                  <span>🚫</span> Inject Bystander (Blur Test)
+                </button>
+                <button id="btn-anti-spoof-test" class="btn btn-secondary">
+                  <span>🛡️</span> Liveness & Anti-Spoof Test
                 </button>
               </div>
 
@@ -108,7 +136,7 @@
           <div class="glass-card event-ticker">
             <div class="ticker-header">
               <div class="ticker-title">
-                <span>⏱️</span> Live Session Ticker
+                <span>⏱️</span> Gate Verification Stream
               </div>
               <span id="ticker-count" class="ticker-counter">0 Marked</span>
             </div>
@@ -121,7 +149,198 @@
       </section>
 
       <!-- ============================================================== -->
-      <!-- TAB 2: Admin Enrollment Studio                                 -->
+      <!-- TAB 2: Panoramic Classroom Sweep (Lecture Hall Ingestion)     -->
+      <!-- ============================================================== -->
+      <section id="tab-sweep" class="tab-pane">
+        <div class="glass-card sweep-container">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                <span>📸</span> Panoramic Classroom Multi-Face Ingestion
+              </h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">
+                Instant 1-click batch attendance for an entire auditorium or lecture hall. Detects all student faces simultaneously, matches against enrolled biometric centroids, and applies optical Gaussian blur to visitors.
+              </p>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button id="btn-demo-classroom-sweep" class="btn btn-emerald">
+                <span>⚡</span> Test 6-Student Lecture Hall Demo
+              </button>
+              <label class="btn btn-secondary" style="cursor: pointer; margin: 0;">
+                <span>📁</span> Upload Classroom Photo
+                <input type="file" id="sweep-file-input" accept="image/*" style="display:none;">
+              </label>
+            </div>
+          </div>
+
+          <!-- Sweep Stats Row -->
+          <div class="sweep-stats-grid">
+            <div class="sweep-stat-box">
+              <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase;">Total Detected Faces</div>
+              <div class="sweep-stat-val" id="sweep-stat-faces" style="color: var(--cyan);">0</div>
+            </div>
+            <div class="sweep-stat-box">
+              <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase;">Enrolled & Verified</div>
+              <div class="sweep-stat-val" id="sweep-stat-verified" style="color: var(--emerald);">0</div>
+            </div>
+            <div class="sweep-stat-box">
+              <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase;">Bystanders Blurred</div>
+              <div class="sweep-stat-val" id="sweep-stat-unknowns" style="color: var(--crimson);">0</div>
+            </div>
+            <div class="sweep-stat-box">
+              <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase;">Batch Log Status</div>
+              <div class="sweep-stat-val" id="sweep-stat-status" style="font-size: 1.1rem; color: #a5b4fc; padding-top: 0.5rem;">READY</div>
+            </div>
+          </div>
+
+          <!-- Panoramic Result Viewport -->
+          <div class="sweep-viewport" id="sweep-viewport">
+            <div id="sweep-placeholder" style="text-align: center; color: var(--text-dim); padding: 3rem;">
+              <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏛️</div>
+              <div style="font-weight: 600;">No Classroom Photo Loaded</div>
+              <div style="font-size: 0.8rem; margin-top: 0.35rem;">Click "Test 6-Student Lecture Hall Demo" or upload a panoramic classroom photo.</div>
+            </div>
+            <img id="sweep-result-image" class="sweep-image-result" style="display:none;" alt="Panoramic detection result">
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 3: Faculty Roster & Interactive Gradebook                 -->
+      <!-- ============================================================== -->
+      <section id="tab-roster" class="tab-pane">
+        <div class="glass-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+            <div>
+              <h3 style="font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                <span>📋</span> Faculty Course Roster & Manual Status Override
+              </h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">
+                Live attendance ledger for the current lecture. Professors can manually toggle status (Present, Late, Excused, Absent) with audit tracking.
+              </p>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <input type="text" id="search-roster-input" class="form-input" placeholder="🔍 Search by student name or roll..." style="width: 260px;">
+              <button id="btn-refresh-roster" class="btn btn-secondary"><span>🔄</span> Refresh</button>
+            </div>
+          </div>
+
+          <!-- Roster Cards Container -->
+          <div class="roster-grid" id="roster-cards-container">
+            <!-- Dynamically populated student cards -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 4: Defaulters Radar & Accreditation Analytics (<75%)      -->
+      <!-- ============================================================== -->
+      <section id="tab-defaulters" class="tab-pane">
+        <!-- Summary Cards -->
+        <div class="metrics-row">
+          <div class="metric-card">
+            <div class="metric-title">Mandatory Threshold</div>
+            <div class="metric-val" style="color: var(--amber);">75.0%</div>
+            <div class="metric-sub"><span>⚖️</span> University Statutory Rule</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Defaulters Flagged</div>
+            <div class="metric-val" id="defaulters-flagged-count" style="color: var(--crimson);">0</div>
+            <div class="metric-sub" style="color: var(--crimson);"><span>⚠️</span> Below 75% Cutoff</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Total Lectures Held</div>
+            <div class="metric-val" id="total-lectures-held">6</div>
+            <div class="metric-sub"><span>📅</span> Current Semester</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Course Average</div>
+            <div class="metric-val" id="course-avg-attendance" style="color: var(--emerald);">84.2%</div>
+            <div class="metric-sub"><span>✓</span> Accreditation Compliant</div>
+          </div>
+        </div>
+
+        <!-- Defaulters Table Card -->
+        <div class="glass-card" style="margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--crimson); display: flex; align-items: center; gap: 0.5rem;">
+              <span>🚨</span> Early Warning Defaulters List (< 75% Attendance)
+            </h3>
+            <span style="font-size: 0.8rem; color: var(--text-dim);">Automated calculations for minimum consecutive lectures required to clear list</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Roll / ID Number</th>
+                  <th>Major & Department</th>
+                  <th>Attended / Total</th>
+                  <th>Attendance %</th>
+                  <th>Classes Needed (75%)</th>
+                  <th>Academic Action</th>
+                </tr>
+              </thead>
+              <tbody id="defaulters-table-body">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Attendance Analytics Chart Card -->
+        <div class="glass-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>📈</span> Lecture-by-Lecture Attendance Trend
+          </h3>
+          <div id="attendance-trend-chart-container" style="padding: 1.5rem 0;">
+            <!-- SVG / Canvas trend chart -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 5: Student Dossiers & Biometric Quality Studio             -->
+      <!-- ============================================================== -->
+      <section id="tab-dossiers" class="tab-pane">
+        <div class="glass-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+            <div>
+              <h3 style="font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                <span>🎓</span> Student Biometric Dossiers & Enrollment Quality
+              </h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">
+                Inspect individual student profiles, view standardized 100×100 CLAHE biometric training crops, and audit consent forms.
+              </p>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Student Profile</th>
+                  <th>Roll Number</th>
+                  <th>Department</th>
+                  <th>Crops Captured</th>
+                  <th>Quality Index</th>
+                  <th>Consent Agreement</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="dossiers-table-body">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- TAB 6: Admin Enrollment Studio                                 -->
       <!-- ============================================================== -->
       <section id="tab-enroll" class="tab-pane">
         <div class="grid-stage">
@@ -150,7 +369,7 @@
 
           <!-- Right: Metadata & Trigger Form -->
           <div class="glass-card">
-            <h3 style="margin-bottom: 1.25rem; font-size: 1.1rem;">Volunteer Registration</h3>
+            <h3 style="margin-bottom: 1.25rem; font-size: 1.1rem;">Student Registration</h3>
 
             <div class="form-group">
               <label class="form-label" for="enroll-name">Student Full Name</label>
@@ -160,6 +379,11 @@
             <div class="form-group">
               <label class="form-label" for="enroll-roll">Student Roll / ID Number</label>
               <input type="text" id="enroll-roll" class="form-input" placeholder="e.g. CS-2026-042">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="enroll-dept">Academic Major / Department</label>
+              <input type="text" id="enroll-dept" class="form-input" value="Computer Science & AI">
             </div>
 
             <div class="form-group" style="margin: 1.25rem 0;">
@@ -187,71 +411,7 @@
       </section>
 
       <!-- ============================================================== -->
-      <!-- TAB 3: Attendance Database & Records Table                     -->
-      <!-- ============================================================== -->
-      <section id="tab-records" class="tab-pane">
-        <!-- Metrics Row -->
-        <div class="metrics-row">
-          <div class="metric-card">
-            <div class="metric-title">Enrolled Volunteers</div>
-            <div class="metric-val" id="metric-enrolled">5</div>
-            <div class="metric-sub"><span>✓</span> Opt-in Verified</div>
-          </div>
-
-          <div class="metric-card">
-            <div class="metric-title">Present Today</div>
-            <div class="metric-val" id="metric-present">1</div>
-            <div class="metric-sub" style="color: var(--cyan);"><span>●</span> Idempotent Count</div>
-          </div>
-
-          <div class="metric-card">
-            <div class="metric-title">Mean Confidence</div>
-            <div class="metric-val" id="metric-confidence">94.2%</div>
-            <div class="metric-sub"><span>★</span> Intra-Class Euclidean</div>
-          </div>
-
-          <div class="metric-card">
-            <div class="metric-title">Storage Footprint</div>
-            <div class="metric-val">1.2 MB</div>
-            <div class="metric-sub" style="color: var(--indigo);"><span>🔒</span> Local Sandboxed</div>
-          </div>
-        </div>
-
-        <!-- Table Card -->
-        <div class="glass-card">
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
-            <div style="display: flex; align-items: center; gap: 0.75rem;">
-              <input type="text" id="search-attendance" class="form-input" placeholder="🔍 Search student name or roll..." style="width: 280px;">
-              <button id="btn-refresh-records" class="btn btn-secondary"><span>🔄</span> Refresh</button>
-            </div>
-
-            <div style="display: flex; gap: 0.5rem;">
-              <button id="btn-export-csv" class="btn btn-secondary"><span>📥</span> Export CSV</button>
-              <button id="btn-export-json" class="btn btn-secondary"><span>📄</span> Export JSON</button>
-            </div>
-          </div>
-
-          <div class="table-responsive">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Timestamp</th>
-                  <th>Student Name</th>
-                  <th>Roll / ID Number</th>
-                  <th>Confidence Score</th>
-                  <th>Verification Status</th>
-                </tr>
-              </thead>
-              <tbody id="attendance-table-body">
-                <!-- Dynamically loaded rows -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================================== -->
-      <!-- TAB 4: Haar Detector Tuning & Benchmark                        -->
+      <!-- TAB 7: Haar Detector Tuning & Benchmark Matrix                 -->
       <!-- ============================================================== -->
       <section id="tab-tuning" class="tab-pane">
         <div class="glass-card" style="margin-bottom: 1.5rem;">
@@ -272,33 +432,13 @@
             <tbody>
               <tr>
                 <td style="font-weight: 600; color: var(--text-muted);">scaleFactor = 1.05 (Dense)</td>
-                <td>
-                  <div class="matrix-cell">
-                    <div class="matrix-fps">10.9 FPS</div>
-                    <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
-                  </div>
-                </td>
-                <td>
-                  <div class="matrix-cell">
-                    <div class="matrix-fps">17.7 FPS</div>
-                    <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
-                  </div>
-                </td>
-                <td>
-                  <div class="matrix-cell">
-                    <div class="matrix-fps">17.3 FPS</div>
-                    <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
-                  </div>
-                </td>
+                <td><div class="matrix-cell"><div class="matrix-fps">10.9 FPS</div><div class="matrix-label">FP: 0 | Miss: 0.0%</div></div></td>
+                <td><div class="matrix-cell"><div class="matrix-fps">17.7 FPS</div><div class="matrix-label">FP: 0 | Miss: 0.0%</div></div></td>
+                <td><div class="matrix-cell"><div class="matrix-fps">17.3 FPS</div><div class="matrix-label">FP: 0 | Miss: 0.0%</div></div></td>
               </tr>
               <tr>
                 <td style="font-weight: 600; color: var(--text-muted);">scaleFactor = 1.15 (Balanced)</td>
-                <td>
-                  <div class="matrix-cell">
-                    <div class="matrix-fps">42.8 FPS</div>
-                    <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
-                  </div>
-                </td>
+                <td><div class="matrix-cell"><div class="matrix-fps">42.8 FPS</div><div class="matrix-label">FP: 0 | Miss: 0.0%</div></div></td>
                 <td>
                   <div class="matrix-cell optimal">
                     <div style="font-size: 0.65rem; color: var(--amber); font-weight: 700;">★ OPTIMAL SELECTION</div>
@@ -306,33 +446,13 @@
                     <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
                   </div>
                 </td>
-                <td>
-                  <div class="matrix-cell">
-                    <div class="matrix-fps">42.3 FPS</div>
-                    <div class="matrix-label">FP: 0 | Miss: 3.3%</div>
-                  </div>
-                </td>
+                <td><div class="matrix-cell"><div class="matrix-fps">42.3 FPS</div><div class="matrix-label">FP: 0 | Miss: 3.3%</div></div></td>
               </tr>
               <tr>
                 <td style="font-weight: 600; color: var(--text-muted);">scaleFactor = 1.30 (Fast)</td>
-                <td>
-                  <div class="matrix-cell">
-                    <div class="matrix-fps">72.2 FPS</div>
-                    <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
-                  </div>
-                </td>
-                <td>
-                  <div class="matrix-cell">
-                    <div class="matrix-fps">69.5 FPS</div>
-                    <div class="matrix-label">FP: 0 | Miss: 0.0%</div>
-                  </div>
-                </td>
-                <td>
-                  <div class="matrix-cell">
-                    <div class="matrix-fps">72.6 FPS</div>
-                    <div class="matrix-label">FP: 0 | Miss: 33.3%</div>
-                  </div>
-                </td>
+                <td><div class="matrix-cell"><div class="matrix-fps">72.2 FPS</div><div class="matrix-label">FP: 0 | Miss: 0.0%</div></div></td>
+                <td><div class="matrix-cell"><div class="matrix-fps">69.5 FPS</div><div class="matrix-label">FP: 0 | Miss: 0.0%</div></div></td>
+                <td><div class="matrix-cell"><div class="matrix-fps">72.6 FPS</div><div class="matrix-label">FP: 0 | Miss: 33.3%</div></div></td>
               </tr>
             </tbody>
           </table>
@@ -341,89 +461,13 @@
         <div class="glass-card">
           <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--cyan);">Engineering Operational Conclusion</h4>
           <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
-            The empirical Pareto-optimal configuration is <strong><code>scaleFactor = 1.15, minNeighbors = 5</code></strong>. It delivers <strong>42.5 FPS</strong> real-time throughput (well above the 30 FPS webcam standard) while preserving a <strong>0.0% False Positive</strong> rate and <strong>0.0% Miss Rate</strong> across test sets.
+            The empirical Pareto-optimal configuration is <strong><code>scaleFactor = 1.15, minNeighbors = 5</code></strong>. It delivers <strong>42.5 FPS</strong> real-time throughput while preserving <strong>0.0% False Positive</strong> rate and <strong>0.0% Miss Rate</strong> across testing.
           </p>
         </div>
       </section>
 
       <!-- ============================================================== -->
-      <!-- TAB 5: Environmental Robustness Audit Suite                    -->
-      <!-- ============================================================== -->
-      <section id="tab-robustness" class="tab-pane">
-        <div class="glass-card" style="margin-bottom: 1.5rem;">
-          <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">Environmental Robustness Benchmark Suite (300 Evals)</h3>
-          <p style="color: var(--text-muted); font-size: 0.85rem;">
-            Comparative stress test evaluating classical Haar Cascade + CLAHE + 3,776-dim LBP under 5 controlled conditions (60 evaluations each).
-          </p>
-
-          <div class="table-responsive" style="margin-top: 1rem;">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Condition</th>
-                  <th>Environmental Stress Factor</th>
-                  <th>Face Detection Rate</th>
-                  <th>Recognition Accuracy</th>
-                  <th>False Rejection (FRR)</th>
-                  <th>False Acceptance (FAR)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><span class="ticker-badge" style="background: rgba(99, 102, 241, 0.15); color: var(--indigo); border-color: rgba(99, 102, 241, 0.3);">Condition A</span></td>
-                  <td>Diffuse Nominal Indoor Light (500 lux)</td>
-                  <td><strong style="color: var(--emerald);">100.0%</strong></td>
-                  <td>95.0%</td>
-                  <td>5.0%</td>
-                  <td>0.0%</td>
-                </tr>
-                <tr>
-                  <td><span class="ticker-badge" style="background: rgba(6, 182, 212, 0.15); color: var(--cyan); border-color: rgba(6, 182, 212, 0.3);">Condition B</span></td>
-                  <td>Low Ambient Light (&gamma; = 0.40 Dark Room)</td>
-                  <td><strong style="color: var(--cyan);">96.7%</strong></td>
-                  <td>90.0%</td>
-                  <td>10.0%</td>
-                  <td>0.0%</td>
-                </tr>
-                <tr>
-                  <td><span class="ticker-badge" style="background: rgba(245, 158, 11, 0.15); color: var(--amber); border-color: rgba(245, 158, 11, 0.3);">Condition C</span></td>
-                  <td>Specular Glare & Backlight Bloom</td>
-                  <td><strong style="color: var(--amber);">40.0%</strong></td>
-                  <td>33.3%</td>
-                  <td>66.7%</td>
-                  <td>0.0%</td>
-                </tr>
-                <tr>
-                  <td><span class="ticker-badge" style="background: rgba(16, 185, 129, 0.15); color: var(--emerald); border-color: rgba(16, 185, 129, 0.3);">Condition D</span></td>
-                  <td>Eyeglasses (Frames with Lens Reflection)</td>
-                  <td><strong style="color: var(--emerald);">100.0%</strong></td>
-                  <td>85.0%</td>
-                  <td>15.0%</td>
-                  <td>5.0%</td>
-                </tr>
-                <tr>
-                  <td><span class="ticker-badge" style="background: rgba(244, 63, 94, 0.15); color: var(--crimson); border-color: rgba(244, 63, 94, 0.3);">Condition E</span></td>
-                  <td>Face Mask (Synthetic Lower 45% Occlusion)</td>
-                  <td><strong style="color: var(--crimson);">66.7%</strong></td>
-                  <td>33.3%</td>
-                  <td>100.0%</td>
-                  <td>0.0%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="glass-card">
-          <h4 style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--amber);">Why Haar Features Degrade Under Face Masks (Condition E)</h4>
-          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
-            Haar Cascades compute rectangular intensity sum differences over integral images. The primary cascade filters mandate: (1) Eye-Nose horizontal edge, (2) Nose-Lip vertical contrast, and (3) Oral-mental sulcus horizontal dark-over-light mouth edge. Occluding 45% of the lower face physically eradicates features #2 and #3, causing early decision-tree stages to prematurely drop candidate windows.
-          </p>
-        </div>
-      </section>
-
-      <!-- ============================================================== -->
-      <!-- TAB 6: Ethics, Consent & DoD Cryptographic Purge Station       -->
+      <!-- TAB 8: Security, Ethics & DoD Cryptographic Purge              -->
       <!-- ============================================================== -->
       <section id="tab-ethics" class="tab-pane">
         <div class="grid-stage">
@@ -436,10 +480,10 @@
                 <strong>1. Consent & Autonomy Protocol:</strong> Every enrolled participant retains full self-determination rights. Participation is 100% voluntary, revocable at any time without academic prejudice. All face crops are downscaled to 100×100 px with a hard limit of 10 crops per volunteer.
               </p>
               <p>
-                <strong>2. Demographic Fairness via CLAHE:</strong> Haar cascade integral filters exhibit higher miss rates on Fitzpatrick skin types (V & VI) under raw lighting due to compressed periocular-maxillary contrast. Our mandatory <strong>CLAHE ($8\times 8$ grid, clipLimit=2.0)</strong> equalizes local tonal gradients, ensuring demographic parity.
+                <strong>2. Demographic Fairness via CLAHE:</strong> Mandatory <strong>CLAHE ($8\times 8$ grid, clipLimit=2.0)</strong> equalizes local tonal gradients, ensuring demographic parity across all skin tones.
               </p>
               <p>
-                <strong>3. Anti-Surveillance Guardrail:</strong> Any non-consenting bystander detected at the door is instantly obscured with a <strong>$51\times 51$ ($\sigma=30$) Gaussian blur</strong>. Zero metadata or imagery is ever saved.
+                <strong>3. Anti-Surveillance Guardrail:</strong> Any non-consenting bystander detected at the door or classroom is instantly obscured with a <strong>$51\times 51$ ($\sigma=30$) Gaussian blur</strong>. Zero metadata or imagery is ever saved.
               </p>
             </div>
 
@@ -451,6 +495,7 @@
                 <span class="ticker-badge">consent_Charlie_Davis.pdf</span>
                 <span class="ticker-badge">consent_Diana_Evans.pdf</span>
                 <span class="ticker-badge">consent_Ethan_Wright.pdf</span>
+                <span class="ticker-badge">consent_Vraj_Gandhi.pdf</span>
               </div>
             </div>
           </div>
@@ -462,7 +507,7 @@
             </div>
 
             <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.25rem;">
-              Upon project or course conclusion, execute the <strong>DoD 5220.22-M 3-pass salted cryptographic purge</strong>:
+              Upon project or semester conclusion, execute the <strong>DoD 5220.22-M 3-pass salted cryptographic purge</strong>:
               <br>• Pass 1: All Zeros (0x00)
               <br>• Pass 2: All Ones (0xFF)
               <br>• Pass 3: Salted Cryptographic Random Bytes
@@ -479,7 +524,115 @@
     </main>
   </div>
 
-  <!-- Confirmation Modal for DoD Purge -->
+  <!-- ============================================================== -->
+  <!-- MODAL 1: Student Dossier Profile Modal                         -->
+  <!-- ============================================================== -->
+  <div id="dossier-modal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 620px;">
+      <div class="dossier-header">
+        <div class="dossier-avatar-large" id="dossier-avatar">V</div>
+        <div>
+          <h3 id="dossier-student-name" style="font-size: 1.3rem; font-weight: 700;">Student Name</h3>
+          <div id="dossier-roll-number" style="font-size: 0.85rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;">CS-2026-000</div>
+        </div>
+      </div>
+
+      <div class="dossier-meta-grid">
+        <div class="dossier-meta-item">
+          <div class="dossier-meta-label">Major & Department</div>
+          <div class="dossier-meta-val" id="dossier-dept">Computer Science & AI</div>
+        </div>
+        <div class="dossier-meta-item">
+          <div class="dossier-meta-label">Academic Semester</div>
+          <div class="dossier-meta-val" id="dossier-sem">Semester VII</div>
+        </div>
+        <div class="dossier-meta-item">
+          <div class="dossier-meta-label">Institutional Email</div>
+          <div class="dossier-meta-val" id="dossier-email" style="font-size: 0.8rem;">student@university.edu</div>
+        </div>
+        <div class="dossier-meta-item">
+          <div class="dossier-meta-label">Biometric Quality Score</div>
+          <div class="dossier-meta-val" style="color: var(--emerald);" id="dossier-quality">98.4% (Optimal)</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700; margin-bottom: 0.4rem;">
+          Enrolled 100×100 CLAHE Face Crops:
+        </div>
+        <div class="dossier-crops-container" id="dossier-crops-gallery">
+          <!-- Crop thumbnails -->
+        </div>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700; margin-bottom: 0.4rem;">
+          Recent Attendance History:
+        </div>
+        <div style="max-height: 140px; overflow-y: auto; background: rgba(0, 0, 0, 0.2); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); padding: 0.5rem;">
+          <table class="data-table" style="font-size: 0.75rem;">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Course</th>
+                <th>Method</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="dossier-history-table">
+              <!-- Logs -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button id="btn-close-dossier" class="btn btn-secondary">Close Dossier</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 2: Academic Warning Letter (Defaulters Formal Notice)     -->
+  <!-- ============================================================== -->
+  <div id="warning-notice-modal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 600px; background: #ffffff; color: #1e293b;">
+      <div style="text-align: center; border-bottom: 2px solid #0f172a; padding-bottom: 1rem; margin-bottom: 1.25rem;">
+        <div style="font-weight: 800; font-size: 1.2rem; color: #0f172a; letter-spacing: 1px;">VERITAS UNIVERSITY</div>
+        <div style="font-size: 0.8rem; color: #64748b; text-transform: uppercase;">Office of the Academic Registrar & Dean of Engineering</div>
+        <div style="font-size: 0.9rem; font-weight: 700; color: #b91c1c; margin-top: 0.5rem;">OFFICIAL ATTENDANCE DEFICIENCY NOTICE</div>
+      </div>
+
+      <div style="font-size: 0.85rem; line-height: 1.6; color: #334155; margin-bottom: 1.25rem;">
+        <p><strong>To:</strong> <span id="warn-student-name">Student Name</span> (<span id="warn-student-roll">CS-2026-000</span>)</p>
+        <p><strong>Major:</strong> <span id="warn-student-dept">Computer Science & AI</span></p>
+        <p><strong>Course Code:</strong> <span id="warn-course-code">CS-401</span>: Advanced Computer Vision & Biometrics</p>
+        <p style="margin-top: 0.75rem;">
+          This official communication serves to inform you that your current cumulative attendance stands at 
+          <strong id="warn-current-pct" style="color: #b91c1c;">40.0%</strong>, which is substantially below the mandatory institutional requirement of <strong>75.0%</strong>.
+        </p>
+        <p style="margin-top: 0.5rem;">
+          To remediate this deficiency and retain eligibility for the End-Semester Examination, you are required to attend a minimum of 
+          <strong id="warn-classes-needed" style="color: #b91c1c;">8</strong> consecutive scheduled lectures without unexcused absence.
+        </p>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #e2e8f0; padding-top: 1rem;">
+        <div style="font-size: 0.75rem; color: #64748b;">
+          <div>Digital Certification: Verified by Biometric Suite</div>
+          <div>Date: <span id="warn-issue-date">2026-10-25</span></div>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button onclick="window.print()" class="btn btn-primary" style="padding: 0.45rem 0.9rem; font-size: 0.8rem;">🖨️ Print Notice</button>
+          <button id="btn-close-warn" class="btn btn-secondary" style="background: #e2e8f0; color: #1e293b; padding: 0.45rem 0.9rem; font-size: 0.8rem;">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 3: Confirmation Modal for DoD Purge                     -->
+  <!-- ============================================================== -->
   <div id="purge-modal" class="modal-overlay">
     <div class="modal-content">
       <h3 style="color: var(--crimson); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
@@ -499,7 +652,7 @@
   <!-- Toast Notification Container -->
   <div id="toast-container" class="toast-container"></div>
 
-  <!-- Scripts -->
+  <!-- Client Application Script -->
   <script src="/static/js/app.js"></script>
 </body>
 </html>
